@@ -8,8 +8,8 @@ class Sensor extends Model
 {
     //
     protected $fillable = [
-        'humidity',
-        'temperature',
+        'obstacle',
+        
        
     ];
 }

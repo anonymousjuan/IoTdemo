@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sensor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SensorController extends Controller
 {
@@ -28,7 +29,22 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         // Validate incoming data
+         $request->validate([
+            'obstacle' => 'required|integer',
+        ]);
+
+        // Insert into database
+        $inserted = DB::table('ir_sensor')->insert([
+            'obstacle' => $request->input('obstacle'),
+            'created_at' => now(),
+        ]);
+
+        if ($inserted) {
+            return response()->json(['message' => 'Data stored successfully!'], 200);
+        } else {
+            return response()->json(['error' => 'Database insertion failed!'], 500);
+        }
     }
 
     /**
@@ -36,7 +52,7 @@ class SensorController extends Controller
      */
     public function show(Sensor $sensor)
     {
-        //
+        
     }
 
     /**
