@@ -35,9 +35,8 @@ class SensorController extends Controller
         ]);
 
         // Save data to the database
-        $sensorData = new Sensor();
-        $sensorData->obstacle = $request->obstacle;
-        $sensorData->save();
+        DB::insert("INSERT INTO sensors (obstacle, created_at, updated_at) VALUES (?, NOW(), NOW())", [$request->obstacle]);
+
 
         return response()->json(['message' => 'Data stored successfully!'], 200);
     }
