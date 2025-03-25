@@ -29,22 +29,17 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-         // Validate incoming data
-         $request->validate([
+        // Validate the request
+        $request->validate([
             'obstacle' => 'required|integer',
         ]);
 
-        // Insert into database
-        $inserted = DB::table('ir_sensor')->insert([
-            'obstacle' => $request->input('obstacle'),
-            'created_at' => now(),
-        ]);
+        // Save data to the database
+        $sensorData = new Sensor();
+        $sensorData->obstacle = $request->obstacle;
+        $sensorData->save();
 
-        if ($inserted) {
-            return response()->json(['message' => 'Data stored successfully!'], 200);
-        } else {
-            return response()->json(['error' => 'Database insertion failed!'], 500);
-        }
+        return response()->json(['message' => 'Data stored successfully!'], 200);
     }
 
     /**
