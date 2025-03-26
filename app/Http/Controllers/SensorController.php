@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sensor;
+use App\Http\Requests\StoreSensorRequest;
+use App\Http\Requests\UpdateSensorRequest;
 use Illuminate\Http\Request;
 
 class SensorController extends Controller
@@ -12,15 +14,7 @@ class SensorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Sensor::all();
     }
 
     /**
@@ -28,7 +22,12 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $field =  $request->validate([
+        'obstacle'=>'required',
+    ]);
+    // return 'ok';
+   $post =  Sensor::create($field);
+    return ['post'=>$post];
     }
 
     /**
@@ -40,17 +39,9 @@ class SensorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sensor $sensor)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sensor $sensor)
+    public function update(UpdateSensorRequest $request, Sensor $sensor)
     {
         //
     }
